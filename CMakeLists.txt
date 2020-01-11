@@ -5,20 +5,16 @@ project(oop_exercise_07)
 include_directories(include)
 include_directories(include/figures)
 
-add_library(editor STATIC
-  editor.cpp
-  command.cpp
-  document.cpp
-  factory.cpp
-  )
-
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_CXX_FLAGS "-g")
+
 add_executable(main
   src/main.cpp
+  include/editor.cpp
+  include/command.cpp
+  include/document.cpp
+  include/factory.cpp
   )
-
-target_link_libraries(main editor)
