@@ -1,11 +1,12 @@
 #include "factory.hpp"
+#include <algorithm>
 
 namespace bad {
 
 std::shared_ptr<Figure> Factory::FigureCreate(std::istream& is) {
     std::string figureName;
     is >> figureName;
-    
+    std::transform(figureName.begin(), figureName.end(), figureName.begin(), ::tolower);
     std::shared_ptr<Figure> figure;
     if (figureName == "triangle") {
         figure = std::shared_ptr<Figure>(new Triangle(is));

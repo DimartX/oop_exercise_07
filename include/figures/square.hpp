@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include "figure.hpp"
-#include "point.hpp"
 
 namespace bad {
 
@@ -22,15 +21,15 @@ public:
     }
     
     void print(std::ostream& os) const override {
-        std::cout << "Square\n";
+        os << "Square\n";
         for (int i = 0; i < NUM; i++) {
             pts[i].Print(os);
         }
-        std::cout << std::endl;
+        os << std::endl;
     }
 private:
     static const int NUM = 4;
     Point pts[NUM];
-}
+};
 
 }; // namespace bad

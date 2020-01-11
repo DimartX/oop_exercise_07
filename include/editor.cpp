@@ -1,14 +1,15 @@
+#include "editor.hpp"
+
 namespace bad {
 
 void Editor::CreateDocument(const std::string& name) {
-    document = std::unique_ptr<Document>( new Document(name));
+    document_ = std::unique_ptr<Document>( new Document(name));
 }
 
 void Editor::LoadDocument(const std::string& name) {
     try {
         document_ = std::unique_ptr<Document>( new Document(name));
         document_->Load(name);
-        history_.clear();
     }
     catch (std::logic_error& e) {
         throw e; 
@@ -28,15 +29,15 @@ void Editor::PrintDocument(std::ostream& os) const {
         throw std::logic_error("There is no document");
         return;
     }
-    document_->Print(name);
+    document_->Print(os);
 }
 
-void Editor::InsertFigure(std::shared_ptr<figure>& newFigure) {
+void Editor::InsertFigure(std::shared_ptr<Figure>& newFigure) {
     if (document_ == nullptr) {
         throw std::logic_error("There is no document");
         return;
     }
-    document_->insert(newFigure);
+    document_->Insert(newFigure);
 }
 
 void Editor::DeleteFigure(int index) {
@@ -47,12 +48,12 @@ void Editor::DeleteFigure(int index) {
     if (index > document_->Size() || index < 0) {
         throw std::logic_error("Out of bound");
     }
-    document_->Erase();
+    document_->Erase(index);
 }
     
 void Editor::Undo() {
     try {
-        command->Undo();
+        document_->Undo();
     } catch(std::logic_error& e) {
         throw e;
     }

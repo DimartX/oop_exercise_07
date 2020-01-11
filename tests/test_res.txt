@@ -1,0 +1,44 @@
+Enter help to find out how it works
+Document created
+DEBUG dot
+Error: There is no such figure
+DEBUG triangle
+Ok
+DEBUG square
+Error: It is NOT square
+DEBUG square
+Ok
+DEBUG rectangle
+Ok
+Triangle
+1 2 3 4 5 6 
+Square
+0 1 1 0 0 -1 -1 0 
+Rectangle
+0 1 1 0 0 -1 -1 0 
+Document loss saved
+Ok
+Square
+0 1 1 0 0 -1 -1 0 
+Rectangle
+0 1 1 0 0 -1 -1 0 
+Ok
+Triangle
+1 2 3 4 5 6 
+Square
+0 1 1 0 0 -1 -1 0 
+Rectangle
+0 1 1 0 0 -1 -1 0 
+Document created
+Buffer is empty
+DEBUG Triangle
+DEBUG Square
+DEBUG Rectangle
+Document loss loaded
+Triangle
+1 2 3 4 5 6 
+Square
+0 1 1 0 0 -1 -1 0 
+Rectangle
+0 1 1 0 0 -1 -1 0 
+Wrong command

@@ -1,0 +1,16 @@
+create man
+add dot     
+add triangle 1 2 3 4 5 6 
+add square 1 2 3 4 5 6 7 8
+add square 0 1 1 0 0 -1 -1 0
+add rectangle 0 1 1 0 0 -1 -1 0
+print
+save loss
+remove 0
+print
+undo
+print
+create kek 
+print
+load loss
+print

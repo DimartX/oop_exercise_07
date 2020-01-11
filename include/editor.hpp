@@ -2,10 +2,7 @@
 
 #include <iostream>
 #include <memory>
-#include <stack>
 
-#include "factory.hpp"
-#include "command.hpp"
 #include "document.hpp"
 
 namespace bad {
@@ -13,7 +10,7 @@ namespace bad {
 struct Editor {
 public:
     Editor() :
-        document(nullptr)
+        document_(nullptr)
     {};
 
     void CreateDocument(const std::string& name);
@@ -21,7 +18,7 @@ public:
     void SaveDocument(const std::string& name);
     void PrintDocument(std::ostream& os) const;
     
-    void InsertFigure(std::shared_ptr<figure>& newFigure);
+    void InsertFigure(std::shared_ptr<Figure>& newFigure);
     void DeleteFigure(int index);
     
     void Undo();
@@ -30,7 +27,7 @@ public:
     
     ~Editor() = default;
 private:
-    std::unique_ptr<Document> document;
+    std::unique_ptr<Document> document_;
 };
 
 }; // namespace bad

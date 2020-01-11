@@ -1,37 +1,44 @@
 #pragma once
 
 namespace bad {
+struct Command;
+}
+
+#include "document.hpp"
+#include "figure.hpp"
+
+namespace bad {
 
 struct Command {
 public:
     virtual void Undo() = 0;
     virtual ~Command() = default;
 protected:
-    std::shared_ptr<Document> document_;
+    Document* document_;
 };
 
 struct InsertCommand : public Command{
 public:
-    InsertCommand(std::shared_ptr<Document> document) :
-        document_(document)
-    {};
+    InsertCommand(Document* document) {
+        document_ = document;
+    };
     
     void Undo() override;
 };
 
 struct DeleteCommand : public Command {
 public:
-    DeleteCommand(std::shared_ptr<Figure>& figure, int index, std::shared_ptr<Document> document) :
-        document_(document),
+    DeleteCommand(std::shared_ptr<Figure>& figure, int index, Document* document) :
         figure_(figure),
-        index_(index)
-    {};
+        index_(index) {
+        document_ = document;
+    };
     
     
     void Undo() override;
 private:
     std::shared_ptr<Figure> figure_;
     int index_;
-}
+};
 
 }; // namespace bad

@@ -1,8 +1,9 @@
 #include "document.hpp"
+#include <fstream>
 
 namespace bad {
 
-void Document::Insert(std::shared_ptr<figure>& ptr) {
+void Document::Insert(std::shared_ptr<Figure>& ptr) {
     std::unique_ptr<Command> command = std::unique_ptr<Command>
         (new InsertCommand(this));
     history_.push(std::move(command));
@@ -10,39 +11,45 @@ void Document::Insert(std::shared_ptr<figure>& ptr) {
     buffer_.push_back(ptr);
 }
 
-void Document::Insert(std::shared_ptr<figure>& ptr, int index) {
-    buffer_.insert(buffer_.begin() + index, newFigure);
+void Document::Insert(std::shared_ptr<Figure>& ptr, int index) {
+    buffer_.insert(buffer_.begin() + index, ptr);
 }
 
 void Document::Erase(int index) {
     std::shared_ptr<Figure> tmp = buffer_[index];
     std::unique_ptr<Command> command = std::unique_ptr<Command>
-        (new DeleteCommand(std::move(tmp), index, this));
+        (new DeleteCommand(tmp, index, this));
+    //std::cout << "PUSHED ";
+    //tmp->print(std::cout);
     history_.push(std::move(command));
     
-    buffer_.erase(index);
+    buffer_.erase(buffer_.begin() + index);
 }
 
 void Document::Erase() {
     buffer_.pop_back();
 }
 
-void Document::Save(const string& name) const {
+void Document::Load(const std::string& name) {
     std::ifstream fis(name);
     if (!fis.is_open()) {
         throw std::runtime_error("File is not opened\n");
     }
-    while (fis) {
-        buffer_.push_back(factory_.FigureCreate(fis));
-        documentName_ = name;
+    documentName_ = name;
+    int size_buf;
+    fis >> size_buf;
+    buffer_.resize(size_buf);
+    for (int i = 0; i < buffer_.size(); i++) {
+        buffer_[i] = factory_.FigureCreate(fis);
     }
 }
 
-void Document::Load(const string& name) {
+void Document::Save(const std::string& name) {
     std::ofstream fos(name);
     if (!fos.is_open()) {
         throw std::runtime_error("File is not opened\n");
     }
+    fos << buffer_.size() << std::endl;
     for (auto elem : buffer_) {
         elem->print(fos);
     }

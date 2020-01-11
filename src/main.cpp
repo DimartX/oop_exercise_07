@@ -1,21 +1,20 @@
 #include <iostream>
 
 #include "editor.hpp"
+#include "factory.hpp"
 
 void help() {
-    std::cout << "help\n"
-                 "create\n"
-                 "add\n"
-                 "remove\n"
+    std::cout << "create <document_name>\n"
+                 "add <figure_name> <points>\n"
+                 "remove <figure_index>\n"
                  "undo\n"
-                 "load\n"
-                 "save\n"
+                 "load <filename>\n"
+                 "save <filename>\n"
                  "print\n"
                  "exit\n";
 }
 
 void create(bad::Editor& editor) {
-    std::cout << "Enter document name: ";
     std::string name;
     std::cin >> name;
     try {
@@ -28,8 +27,8 @@ void create(bad::Editor& editor) {
 
 void add(bad::Editor& editor, bad::Factory& factory) {
     try {
-        std::shared_ptr<Figure> newFigure = fac.FigureCreate(std::cin);
-        edit.InsertFigure(newFigure);
+        std::shared_ptr<bad::Figure> newFigure = factory.FigureCreate(std::cin);
+        editor.InsertFigure(newFigure);
         std::cout << "Ok" << std::endl;
     } catch (std::logic_error& e) {
         std::cout << "Error: " << e.what();
@@ -57,7 +56,6 @@ void undo(bad::Editor& editor) {
 }
 
 void load(bad::Editor& editor) {
-    std::cout << "Enter filename: ";
     std::string name;
     std::cin >> name;
     try {
@@ -69,7 +67,6 @@ void load(bad::Editor& editor) {
 }
 
 void save(bad::Editor& editor) {
-    std::cout << "Enter filename: ";
     std::string name;
     std::cin >> name;
     try {
@@ -81,14 +78,16 @@ void save(bad::Editor& editor) {
 }
 
 void print(bad::Editor& editor) {
-    editor.PrintDocument();
+    editor.PrintDocument(std::cout);
 }
 
 int main() {
     bad::Editor editor;
     bad::Factory factory;
+
+    std::cout << "Enter help to find out how it works" << std::endl;
     
-    while (cin) {
+    while (std::cin) {
         std::string command;
         std::cin >> command;
 
@@ -96,7 +95,7 @@ int main() {
             create(editor);
         }
         else if (command == "add") {
-            add(editor);
+            add(editor, factory);
         }
         else if (command == "remove") {
             remove(editor);

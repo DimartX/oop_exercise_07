@@ -1,6 +1,12 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
+
+#include "figure.hpp"
+#include "triangle.hpp"
+#include "rectangle.hpp"
+#include "square.hpp"
 
 namespace bad {
 

@@ -11,16 +11,13 @@ public:
     }
     
     void Print(std::ostream& os) const {
-        os << "{" << x << ' ' << y << "}";
+        os << x << ' ' << y << ' ';
     }
 
-    friend int dist(const Point& a, const Point& b);
-    
-private:
     int x, y;
 };
 
-int dist(const Point& a, const Point& b) {
+inline int dist(const Point& a, const Point& b) {
     return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
